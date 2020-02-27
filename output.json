@@ -1,1 +1,20 @@
-[{'run': 100, 'percentage_done': 10.0, 'pop_size': 10000, 'hetero': 0.1155, 'homo_d': 0.0913, 'homo_r': 0.7932}, {'run': 200, 'percentage_done': 20.0, 'pop_size': 10000, 'hetero': 0.1309, 'homo_d': 0.0852, 'homo_r': 0.7839}, {'run': 300, 'percentage_done': 30.0, 'pop_size': 10000, 'hetero': 0.1436, 'homo_d': 0.0802, 'homo_r': 0.7762}, {'run': 400, 'percentage_done': 40.0, 'pop_size': 10000, 'hetero': 0.1572, 'homo_d': 0.0732, 'homo_r': 0.7696}, {'run': 500, 'percentage_done': 50.0, 'pop_size': 10000, 'hetero': 0.1674, 'homo_d': 0.0691, 'homo_r': 0.7635}, {'run': 600, 'percentage_done': 60.0, 'pop_size': 10000, 'hetero': 0.1744, 'homo_d': 0.0642, 'homo_r': 0.7614}, {'run': 700, 'percentage_done': 70.0, 'pop_size': 10000, 'hetero': 0.1836, 'homo_d': 0.0602, 'homo_r': 0.7562}, {'run': 800, 'percentage_done': 80.0, 'pop_size': 10000, 'hetero': 0.1921, 'homo_d': 0.0584, 'homo_r': 0.7495}, {'run': 900, 'percentage_done': 90.0, 'pop_size': 10000, 'hetero': 0.1978, 'homo_d': 0.0537, 'homo_r': 0.7485}]
+[
+  {'run': 100, 'percentage_done': 10.0, 'pop_size': 10000, 'hetero': 0.1155, 'homo_d': 0.0913, 'homo_r': 0.7932
+  },
+  {'run': 200, 'percentage_done': 20.0, 'pop_size': 10000, 'hetero': 0.1309, 'homo_d': 0.0852, 'homo_r': 0.7839
+  },
+  {'run': 300, 'percentage_done': 30.0, 'pop_size': 10000, 'hetero': 0.1436, 'homo_d': 0.0802, 'homo_r': 0.7762
+  },
+  {'run': 400, 'percentage_done': 40.0, 'pop_size': 10000, 'hetero': 0.1572, 'homo_d': 0.0732, 'homo_r': 0.7696
+  },
+  {'run': 500, 'percentage_done': 50.0, 'pop_size': 10000, 'hetero': 0.1674, 'homo_d': 0.0691, 'homo_r': 0.7635
+  },
+  {'run': 600, 'percentage_done': 60.0, 'pop_size': 10000, 'hetero': 0.1744, 'homo_d': 0.0642, 'homo_r': 0.7614
+  },
+  {'run': 700, 'percentage_done': 70.0, 'pop_size': 10000, 'hetero': 0.1836, 'homo_d': 0.0602, 'homo_r': 0.7562
+  },
+  {'run': 800, 'percentage_done': 80.0, 'pop_size': 10000, 'hetero': 0.1921, 'homo_d': 0.0584, 'homo_r': 0.7495
+  },
+  {'run': 900, 'percentage_done': 90.0, 'pop_size': 10000, 'hetero': 0.1978, 'homo_d': 0.0537, 'homo_r': 0.7485
+  }
+]

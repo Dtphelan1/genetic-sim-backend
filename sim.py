@@ -1,5 +1,20 @@
 import random
+import logging
+import logging.config
 
+# Set up logging
+# Create logger
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+# Create handlers
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.ERROR)
+# Create formatters
+basic_formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+# Add formatters to handlers
+stream_handler.setFormatter(basic_formatter)
+# Add formatters to logger
+logger.addHandler(stream_handler)
 # This simulation is limited to running short
 
 HETERO_LABEL = "HETERO"
@@ -17,20 +32,22 @@ EPSILON = 0.001
 BREED_RATE = 0.001
 
 class HeterozygousTraitSimulator:
-  def __init__(self):
+  def __init__(self, log=None):
     self.population_cap = POPCAP
     self.ep = EPSILON
     self.breed_rate = BREED_RATE
     self.zero_population()
+    if log:
+      stream_handler.setLevel(logging.INFO)
 
   def zero_population(self):
-    print("Zero population")
+    logger.info("Zero population")
     self.population = []
     self.population_record = []
 
   # Initialize the population based on initial percentages
   def init_population(self, hetero_zyg, homo_zyg_dom, homo_zyg_rec):
-    print("init pop")
+    logger.info("init pop")
     # Zero population
     self.zero_population()
     # Want to ensure the percentage_sum is within bounds
@@ -50,7 +67,7 @@ class HeterozygousTraitSimulator:
   # Given the current population, cull by a certain amount;
   # If no amount provided, ensure it is below the cap
   def cull_population(self, amount=None):
-    print("cull_population")
+    logger.info("cull_population")
     cur_size = len(self.population)
     # If amount is defined, cull by that amount if it's less than the current  size
     if (amount is not None) and (amount < cur_size):
@@ -67,11 +84,11 @@ class HeterozygousTraitSimulator:
 
   # Based on the current population, reproduce and simulate a new population
   def simulate_new_pop(self):
-    print("simulate new pop")
+    logger.info("simulate new pop")
     new_offspring_arr = []
     cur_size = len(self.population)
     offspring_needed = int(self.breed_rate * cur_size)
-    print("making how many new offspring? " + str(offspring_needed))
+    logger.info("making how many new offspring? " + str(offspring_needed))
     while (len(new_offspring_arr) < offspring_needed):
       # Select two parents
       parent_1 = random.choice(self.population)
@@ -87,7 +104,7 @@ class HeterozygousTraitSimulator:
 
   # Articulate statistics on the current population
   def population_stats(self, run, percentage_done):
-    print("recording pop stats")
+    logger.info("recording pop stats")
     return {
       "run": run,
       "percentage_done": percentage_done,
@@ -104,12 +121,12 @@ class HeterozygousTraitSimulator:
     # run the simulation
     curRun = 1
     tenth_of_run = number_runs / 10
-    print(tenth_of_run)
+    logger.info(tenth_of_run)
     while curRun <= number_runs:
       # Every 10th of the way through, log the states
       if curRun % tenth_of_run == 0:
         percentage_done = (curRun / tenth_of_run) * 10
-        print(percentage_done)
+        logger.info(percentage_done)
         cur_stats = self.population_stats(curRun, percentage_done)
         self.population_record.append(cur_stats)
       self.simulate_new_pop()
@@ -180,4 +197,4 @@ if __name__ == "__main__":
     homo_zyg_rec,
     number_runs
   )
-  print(simulator.get_population_stats())
+  logger.info(simulator.get_population_stats())
