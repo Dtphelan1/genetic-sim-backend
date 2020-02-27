@@ -21,8 +21,8 @@ HETERO_LABEL = "HETERO"
 HOMO_D_LABEL = "HOMO_D"
 HOMO_R_LABEL = "HOMO_R"
 
-HOMO_D_TRAIT = "HOMO_D"
-HOMO_R_TRAIT = "HOMO_R"
+D_TRAIT = "D"
+R_TRAIT = "R"
 
 # Cap for the population
 POPCAP = 10000
@@ -67,7 +67,7 @@ class HeterozygousTraitSimulator:
   # Given the current population, cull by a certain amount;
   # If no amount provided, ensure it is below the cap
   def cull_population(self, amount=None):
-    logger.info("cull_population")
+    logger.debug("cull_population")
     cur_size = len(self.population)
     # If amount is defined, cull by that amount if it's less than the current  size
     if (amount is not None) and (amount < cur_size):
@@ -84,11 +84,10 @@ class HeterozygousTraitSimulator:
 
   # Based on the current population, reproduce and simulate a new population
   def simulate_new_pop(self):
-    logger.info("simulate new pop")
+    logger.debug("simulate new pop")
     new_offspring_arr = []
     cur_size = len(self.population)
     offspring_needed = int(self.breed_rate * cur_size)
-    logger.info("making how many new offspring? " + str(offspring_needed))
     while (len(new_offspring_arr) < offspring_needed):
       # Select two parents
       parent_1 = random.choice(self.population)
@@ -104,7 +103,7 @@ class HeterozygousTraitSimulator:
 
   # Articulate statistics on the current population
   def population_stats(self, run, percentage_done):
-    logger.info("recording pop stats")
+    logger.debug("recording pop stats")
     return {
       "run": run,
       "percentage_done": percentage_done,
@@ -121,12 +120,12 @@ class HeterozygousTraitSimulator:
     # run the simulation
     curRun = 1
     tenth_of_run = number_runs / 10
-    logger.info(tenth_of_run)
+    logger.info("Running this many runs: " + str(number_runs))
     while curRun <= number_runs:
       # Every 10th of the way through, log the states
       if curRun % tenth_of_run == 0:
         percentage_done = (curRun / tenth_of_run) * 10
-        logger.info(percentage_done)
+        logger.info("percentage_done - " + str(percentage_done))
         cur_stats = self.population_stats(curRun, percentage_done)
         self.population_record.append(cur_stats)
       self.simulate_new_pop()
@@ -153,27 +152,27 @@ class PopulationMember():
   # Given a trait_label, determine the traits
   def _set_traits_from_label(self, trait_label):
     if trait_label == HETERO_LABEL:
-      self.traits = [HOMO_D_TRAIT, HOMO_R_TRAIT]
+      self.traits = [D_TRAIT, R_TRAIT]
     elif trait_label == HOMO_D_LABEL:
-      self.traits = [HOMO_D_TRAIT, HOMO_D_TRAIT]
+      self.traits = [D_TRAIT, D_TRAIT]
     elif trait_label == HOMO_R_LABEL:
-      self.traits = [HOMO_R_TRAIT, HOMO_R_TRAIT]
+      self.traits = [R_TRAIT, R_TRAIT]
     else:
       raise Exception("Unknown trait_label - " + trait_label)
 
   # Given a set of traits, determine the trait_label
   def _set_label_from_traits(self, traits):
     # Hetero trait_label is order independent
-    hetero_1_traits = [HOMO_D_TRAIT, HOMO_R_TRAIT]
-    hetero_2_traits = [HOMO_R_TRAIT, HOMO_D_TRAIT]
-    homo_d_traits = [HOMO_D_TRAIT, HOMO_D_TRAIT]
-    homo_r_traits = [HOMO_R_TRAIT, HOMO_R_TRAIT]
+    hetero_1_traits = [D_TRAIT, R_TRAIT]
+    hetero_2_traits = [R_TRAIT, D_TRAIT]
+    d_traits = [D_TRAIT, D_TRAIT]
+    r_traits = [R_TRAIT, R_TRAIT]
 
     if traits == hetero_1_traits or traits == hetero_2_traits:
       self.trait_label = HETERO_LABEL
-    elif traits == homo_d_traits:
+    elif traits == d_traits:
       self.trait_label = HOMO_D_LABEL
-    elif traits == homo_r_traits:
+    elif traits == r_traits:
       self.trait_label = HOMO_R_LABEL
     else:
       raise Exception("Unknown traits - " + ", ".join(traits))
@@ -187,10 +186,10 @@ class PopulationMember():
 
 
 if __name__ == "__main__":
-  simulator =  HeterozygousTraitSimulator()
-  hetero_zyg = 0.1
-  homo_zyg_dom = 0.1
-  homo_zyg_rec = 0.8
+  simulator =  HeterozygousTraitSimulator(log=True)
+  hetero_zyg = 0.2
+  homo_zyg_dom = 0.3
+  homo_zyg_rec = 0.5
   number_runs = 1000
   simulator.run_sim(hetero_zyg,
     homo_zyg_dom,
