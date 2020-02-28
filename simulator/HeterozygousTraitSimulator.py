@@ -29,7 +29,7 @@ POPCAP = 10000
 # Error margin for floats
 EPSILON = 0.001
 # Percentage of population that breeds at every step
-BREED_RATE = 0.001
+BREED_RATE = 0.1
 
 class HeterozygousTraitSimulator:
   def __init__(self, log=None):
@@ -52,7 +52,7 @@ class HeterozygousTraitSimulator:
     self.zero_population()
     # Want to ensure the percentage_sum is within bounds
     percentage_sum = (hetero_zyg + homo_zyg_dom + homo_zyg_rec)
-    if percentage_sum < (1.0 - self.ep) or percentage_sum > 1.0 + self.ep:
+    if percentage_sum < (1.0 - self.ep) or percentage_sum > (1.0 + self.ep):
       raise Exception("population parameters don't add to 100")
     # Get counts for individuals based on percentages
     num_hetero   = int(hetero_zyg * self.population_cap)
@@ -113,12 +113,18 @@ class HeterozygousTraitSimulator:
       "homo_r": len([member for member in self.population if member.get_trait_label() == HOMO_R_LABEL]) / len(self.population)
     }
 
+  def get_population_stats(self):
+    return self.population_record
+
   # Run a simulation `number_runs` long with initial population distributed along the
   def run_sim(self, hetero_zyg, homo_zyg_dom, homo_zyg_rec, number_runs):
+    print(hetero_zyg, homo_zyg_dom, homo_zyg_rec, number_runs)
     # init the population
     self.init_population(hetero_zyg, homo_zyg_dom, homo_zyg_rec)
     # run the simulation
     curRun = 1
+    cur_stats = self.population_stats(curRun, percentage_done)
+    self.population_record.append(cur_stats)
     tenth_of_run = number_runs / 10
     logger.info("Running this many runs: " + str(number_runs))
     while curRun <= number_runs:
@@ -130,9 +136,8 @@ class HeterozygousTraitSimulator:
         self.population_record.append(cur_stats)
       self.simulate_new_pop()
       curRun += 1
+    return self.get_population_stats()
 
-  def get_population_stats(self):
-    return self.population_record
 
 class PopulationMember():
   def __init__(self, trait_label=None, t1=None, t2=None):

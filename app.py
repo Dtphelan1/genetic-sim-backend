@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from .simulator.HeterozygousTraitSimulator import HeterozygousTraitSimulator
 app = Flask(__name__)
 
-simulator = HeterozygousTraitSimulator()
+simulator = HeterozygousTraitSimulator(log=True)
 
 @app.after_request
 def add_headers(response):
@@ -14,17 +14,20 @@ def add_headers(response):
 
 @app.route("/runSim", methods=["GET"])
 def list_todo():
-  hetero_zyg = request.args.get('hetero_zyg')
-  homo_zyg_dom = request.args.get('homo_zyg_dom')
-  homo_zyg_rec = request.args.get('homo_zyg_rec')
-  number_runs = request.args.get('number_runs')
-  simulator.run_sim(hetero_zyg,
+  hetero_zyg = int(request.args.get('hetero'))/100.0 if int(request.args.get('hetero')) > 1.0 else int(request.args.get('hetero'))
+  print(hetero_zyg)
+  homo_zyg_dom = int(request.args.get('homoD'))/100.0 if int(request.args.get('homoD')) > 1.0 else int(request.args.get('homoD'))
+  print(homo_zyg_dom)
+  homo_zyg_rec = int(request.args.get('homoR'))/100.0 if int(request.args.get('homoR')) > 1.0 else int(request.args.get('homoR'))
+  print(homo_zyg_rec)
+  number_runs = int(request.args.get('generations'))
+  print(number_runs)
+
+  return jsonify(simulator.run_sim(hetero_zyg,
     homo_zyg_dom,
     homo_zyg_rec,
-    number_runs
-  )
-  return jsonify(simulator.get_population_stats())
-
+    number_runs,
+  ))
 
 if __name__ == "__main__":
   app.run()
