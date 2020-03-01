@@ -1,9 +1,9 @@
 # app.py
 from flask import Flask, request, jsonify
-from .simulator.HeterozygousTraitSimulator import HeterozygousTraitSimulator
+from .classes.PopulationGenotype import PopulationGenotype
 app = Flask(__name__)
 
-simulator = HeterozygousTraitSimulator(log=True)
+simulator = PopulationGenotype(log=True)
 
 @app.after_request
 def add_headers(response):
