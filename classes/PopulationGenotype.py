@@ -1,7 +1,7 @@
 import random
-from .PopulationMember import PopulationMember
-from .Labels import HETERO_LABEL, HOMO_D_LABEL, HOMO_R_LABEL, D_TRAIT, R_TRAIT
-from .Logger import logger, stream_handler
+from PopulationMember import PopulationMember
+from Labels import HETERO_LABEL, HOMO_D_LABEL, HOMO_R_LABEL, D_TRAIT, R_TRAIT
+from Logger import logger, stream_handler
 
 # Cap for the population
 POPCAP = 1000
@@ -71,7 +71,7 @@ class PopulationGenotype:
     offspring_needed = int(self.breed_rate * cur_size)
     logger.debug(f"cur_size is {cur_size}" )
     while (len(new_offspring_arr) < offspring_needed):
-      if (len(new_offspring_arr) % 100 == 0): 
+      if (len(new_offspring_arr) % 100 == 0):
         logger.debug(f"Still need {offspring_needed - len(new_offspring_arr)} many children")
       # Select two parents
       parent_1 = random.choice(self.population)
