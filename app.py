@@ -13,6 +13,10 @@ def add_headers(response):
   response.headers['Access-Control-Allow-Methods']=  "POST, GET, PUT, DELETE, OPTIONS"
   return response
 
+@app.route("/", methods=["GET"])
+def anything():
+  return jsonify({"hi": "hello"})
+
 @app.route("/runPopSim", methods=["GET"])
 def population_sim():
   hetero_zyg = int(request.args.get('hetero'))/100.0 if int(request.args.get('hetero')) > 1.0 else int(request.args.get('hetero'))
