@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify
-from PopulationGenotype import PopulationGenotype
-from PunnettSquare import generate_offspring, genotype_statistics
+from classes.PopulationGenotype import PopulationGenotype
+from classes.PunnettSquare import generate_offspring, genotype_statistics
 app = Flask(__name__)
 
 simulator = PopulationGenotype(log=True)
