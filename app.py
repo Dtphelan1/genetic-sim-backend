@@ -32,9 +32,9 @@ def population_sim():
 
 @app.route("/runOffspringSim", methods=["GET"])
 def offspring_sim():
-  parent_a = list(request.args.get('parent_a'))
+  parent_a = list(request.args.get('parentA'))
   print(parent_a)
-  parent_b = list(request.args.get('parent_b'))
+  parent_b = list(request.args.get('parentB'))
   print(parent_b)
   number_offspring = int(request.args.get('generations'))
   print(number_offspring)
